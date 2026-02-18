@@ -3,13 +3,28 @@
   "displayName": "gtk-color-preview",
   "description": "Preview GTK color definitions in css files with support for imported values.",
   "version": "0.0.1",
+  "homepage": "https://github.com/unexpectedsense/gtk-color-preview#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/unexpectedsense/gtk-color-preview.git"
+  },
   "engines": {
     "vscode": "^1.109.0"
   },
   "categories": [
+    "Visualization",
     "Other"
   ],
-  "activationEvents": [],
+  "keywords": [
+    "gtk",
+    "css",
+    "color",
+    "preview",
+    "waybar",
+    "gnome"
+  ],
+  "license": "MIT",
+  "activationEvents": ["onLanguage:css"],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [

@@ -9,7 +9,7 @@
     "url": "https://github.com/unexpectedsense/gtk-color-preview.git"
   },
   "engines": {
-    "vscode": "^1.109.0"
+    "vscode": "^1.85.0"
   },
   "categories": [
     "Visualization",
@@ -29,8 +29,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "gtk-color-preview.helloWorld",
-        "title": "Hello World"
+        "command": "gtk-color-preview.refresh",
+        "title": "GTK color preview refresh"
       }
     ]
   },

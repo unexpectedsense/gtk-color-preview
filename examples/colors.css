@@ -1,0 +1,6 @@
+@define-color primary_hex #2c0051;
+@define-color on_primary_container_hex #f8e9ff;
+@define-color tertiary_container_hex #c2aa58;
+@define-color dock_primary_rgb rgba(44, 0, 81, 0.75);
+@define-color empty_primary_rgb rgba(44, 0, 81, 0.95);
+@define-color highlight #978e9b;

@@ -1,0 +1,29 @@
+@import "colors.css";
+
+/* Ejemplo de uso de variables GTK */
+body {
+    color: @primary_hex;
+    background: @on_primary_container_hex;
+    border: 1px solid @tertiary_container_hex;
+}
+
+.container {
+    background: @dock_primary_rgb;
+    color: @on_primary_container_hex;
+}
+
+.highlight {
+    color: @highlight;
+}
+
+/* También funciona con funciones CSS */
+.alpha-example {
+    background: alpha(@primary_hex, 0.55);
+}
+
+/* Mix de variables */
+.complex {
+    color: @primary_hex;
+    background: linear-gradient(45deg, @primary_hex, @tertiary_container_hex);
+    border-color: @highlight;
+}

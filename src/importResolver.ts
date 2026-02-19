@@ -13,7 +13,7 @@ export class ImportResolver {
     }
 
     private async processFile(document: vscode.TextDocument): Promise<void> {
-        // Evitar procesar el mismo archivo múltiples veces
+        // Avoid processing the same file multiple times
         if (this.processedFiles.has(document.fileName)) {
             return;
         }
@@ -21,10 +21,10 @@ export class ImportResolver {
 
         const text = document.getText();
 
-        // 1. Primero, buscar definiciones de color en este archivo
+        // Look for color definitions in this file
         this.parseColorDefinitions(text);
 
-        // 2. Luego, buscar y procesar imports
+        // Search for and process imports
         await this.processImports(document, text);
     }
 
@@ -47,40 +47,40 @@ export class ImportResolver {
             const importPath = match[1];
             
             try {
-                // Resolver la ruta del archivo importado
+                // Resolve the path of the imported file
                 const basePath = path.dirname(document.fileName);
                 let fullPath = '';
 
                 if (importPath.startsWith('./') || importPath.startsWith('../')) {
-                    // Ruta relativa
+                    // Relative path
                     fullPath = path.resolve(basePath, importPath);
                 } else {
-                    // Podría ser un archivo en el mismo directorio
+                    // It could be a file in the same directory
                     fullPath = path.join(basePath, importPath);
                 }
 
-                // Asegurar extensión .css si no tiene
+                // Ensure .css extension if it doesn't have one
                 if (!fullPath.endsWith('.css')) {
                     fullPath += '.css';
                 }
 
                 console.log(`Intentando importar: ${fullPath}`);
 
-                // Verificar si el archivo existe
+                // Check if the file exists
                 try {
                     const uri = vscode.Uri.file(fullPath);
                     await vscode.workspace.fs.stat(uri);
                     
-                    // Abrir y procesar el documento importado
+                    // Open and process the imported document
                     const importDoc = await vscode.workspace.openTextDocument(uri);
                     await this.processFile(importDoc);
                     
                 } catch (error) {
-                    console.log(`No se pudo encontrar el archivo: ${fullPath}`);
+                    console.log(`The file could not be found: ${fullPath}`);
                 }
 
             } catch (error) {
-                console.error(`Error procesando import ${importPath}:`, error);
+                console.error(`Error processing import ${importPath}:`, error);
             }
         }
     }

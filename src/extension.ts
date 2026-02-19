@@ -7,10 +7,8 @@ const importResolver = new ImportResolver();
 
 export function activate(extContext: vscode.ExtensionContext) {
     context = extContext;
-    console.log('Extensión GTK Color Preview activada');
+    console.log('GTK Color Preview extension enabled');
     
-    // Ya no necesitamos circleDecorationType con color fijo
-    // porque ahora el color se asignará dinámicamente
     circleDecorationType = vscode.window.createTextEditorDecorationType({
         before: {
             contentText: '●',
@@ -91,11 +89,11 @@ async function updateDecorations(editor: vscode.TextEditor) {
             const hexColor = extractColorValue(colorValue);
             
             if (hexColor) {
-                // Determinar el color del círculo basado en el fondo
-                // Siempre usamos el color original para el círculo
+                // Determine the circle color based on the background
+                // We always use the original color for the circle
                 const circleColor = hexColor;
                 
-                // Decoración para el círculo
+                // Decoration for the circle
                 circleDecorations.push({
                     range: range,
                     renderOptions: {
@@ -110,7 +108,7 @@ async function updateDecorations(editor: vscode.TextEditor) {
                     }
                 });
                 
-                // Para el fondo, usar color sólido (FF = 100% opacidad)
+                // For the background, use solid color (FF = 100% opacity)
                 const bgColor = hexColor + 'FF';
                 
                 if (!bgRangesByColor.has(bgColor)) {
@@ -123,21 +121,21 @@ async function updateDecorations(editor: vscode.TextEditor) {
     
     editor.setDecorations(circleDecorationType, circleDecorations);
     
-    // Aplicar fondos con color de texto automático
+    // Apply backgrounds with automatic text color
     bgRangesByColor.forEach((ranges, color) => {
-        // Extraer el color base (sin el FF de opacidad)
+        // Extract the base color (without the opacity filter)
         const baseColor = color.slice(0, 7);
         
-        // Determinar si el fondo es claro u oscuro
+        // Determine if the background is light or dark
         const light = isLightColor(baseColor);
         
-        // Crear decoración con color de texto automático
+        // Create decoration with automatic text color
         const decorationType = vscode.window.createTextEditorDecorationType({
             backgroundColor: color,
             borderRadius: '3px',
             border: 'none',
-            color: light ? '#000000' : '#ffffff', // Texto negro en fondos claros, blanco en oscuros
-            fontWeight: 'bold' // Opcional: hacer el texto más legible
+            color: light ? '#000000' : '#ffffff', // Black text on light backgrounds, white on dark backgrounds
+            fontWeight: 'bold' // Make the text more readable
         });
         
         editor.setDecorations(decorationType, ranges);
@@ -147,22 +145,22 @@ async function updateDecorations(editor: vscode.TextEditor) {
     });
 }
 
-// Función para determinar si un color es claro u oscuro
+// Function to determine if a color is light or dark
 function isLightColor(hexColor: string): boolean {
-    // Asegurarse de que el color tenga el formato correcto (#RRGGBB)
+    // Make sure the color is in the correct format (#RRGGBB)
     let hex = hexColor.replace('#', '');
     
-    // Convertir hex a RGB
+    // Convert hex to RGB
     let r = parseInt(hex.slice(0, 2), 16);
     let g = parseInt(hex.slice(2, 4), 16);
     let b = parseInt(hex.slice(4, 6), 16);
     
-    // Fórmula de luminosidad perceptiva (WCAG)
+    // Perceptual brightness formula (WCAG)
     // https://www.w3.org/WAI/GL/wiki/Relative_luminance
     const luminance = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
     
-    // Si la luminosidad es mayor a 0.5, es un color claro
-    // Ajusta este umbral si quieres más o menos sensibilidad
+    // If the luminosity is greater than 0.5, it is a light color
+    // Adjust this threshold if you want more or less sensitivity.
     return luminance > 0.5;
 }
 

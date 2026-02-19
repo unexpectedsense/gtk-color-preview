@@ -7,5 +7,31 @@
 		"out": true // set this to false to include "out" folder in search results
 	},
 	// Turn off tsc task auto detection since we have the necessary tasks as npm scripts
-	"typescript.tsc.autoDetect": "off"
+	"typescript.tsc.autoDetect": "off",
+
+
+	// Disable all validation
+    "css.validate": false,
+    "less.validate": false,
+    "scss.validate": false,
+    
+    // Disable the native linter
+    "css.lint.unknownProperties": "ignore",
+    "css.lint.unknownAtRules": "ignore",
+    "css.lint.validProperties": [],
+    
+    // For Stylelint, if you have it
+    "stylelint.enable": false,
+    
+    // Allows suggestions
+    "editor.quickSuggestions": {
+        "other": true,
+        "comments": false,
+        "strings": true
+    },
+    
+    // Associate with plain text if you want peace of mind
+    "[css]": {
+        "editor.semanticHighlighting.enabled": false
+    }
 }

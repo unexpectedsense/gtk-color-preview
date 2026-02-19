@@ -1,7 +1,11 @@
 
 # GTK Color Preview
 
-A VS Code/VSCodium extension to preview GTK colors in CSS files.
+A VS Code/VSCodium extension to preview GTK colors in CSS files defined by "@define-color".
+
+
+![Preview](assets/screenshot.jpg)
+
 
 ## Features
 
